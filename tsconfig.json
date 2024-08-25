@@ -1,0 +1,42 @@
+// {
+//   "extends": "expo/tsconfig.base",
+//   "compilerOptions": {
+//     "strict": true,
+//     "paths": {
+//       "@/*": [
+//         "./*"
+//       ]
+//     }
+//   },
+//   "include": [
+//     "**/*.ts",
+//     "**/*.tsx",
+//     ".expo/types/**/*.ts",
+//     "expo-env.d.ts"
+// , "app/(tabs)/prediction.jsx", "app/(tabs)/index.jsx", "app/(tabs)/history.jsx", "app/(tabs)/explore.jsx", "app/(tabs)/_layout.jsx", "app/index.jsx", "app/_layout.jsx", "app/(auth)/signup.jsx", "app/(auth)/signin.jsx", "app/(auth)/_layout.jsx"  ]
+// }
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "app/(tabs)/prediction.jsx",
+    "app/(tabs)/index.jsx",
+    "app/(tabs)/history.jsx",
+    "app/(tabs)/profile.jsx",
+    "app/(tabs)/_layout.jsx",
+    "app/index.jsx",
+    "app/_layout.jsx",
+    "app/(auth)/signup.jsx",
+    "app/(auth)/signin.jsx",
+    "app/(auth)/_layout.jsx"
+  ]
+}
