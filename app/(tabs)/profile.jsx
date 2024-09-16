@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 const ProfileScreen = () => {
   // Sample user data
@@ -47,7 +48,9 @@ const ProfileScreen = () => {
         
         <TouchableOpacity style={styles.optionItem}>
           <Ionicons name="log-out-outline" size={24} color="white" />
+          <Link href={'/(auth)/signin'}>
           <Text style={styles.optionText}>Logout</Text>
+          </Link>
         </TouchableOpacity>
       </View>
     </LinearGradient>
