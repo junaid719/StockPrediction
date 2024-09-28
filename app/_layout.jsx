@@ -42,7 +42,7 @@
 
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, useNavigation } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Animated } from 'react-native';
@@ -52,20 +52,43 @@ import { LinearGradient } from 'expo-linear-gradient'; // Import LinearGradient
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  
+  const navigation = useNavigation();
   const colorScheme = useColorScheme();
   const router = useRouter();
   const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
+  const [userInfo, setUserInfo] = useState(""); // State for dropdown visibility
   const dropdownAnimation = useState(new Animated.Value(0))[0]; // State for animated dropdown
 
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userInfo');
+      console.log("valueeeee", value)
+      if (value !== null) {
+        let res = JSON.parse(value)
+        setUserInfo(res?.data)
+              navigation.replace('(tabs)')
+      }
+      else {
+        setUserInfo("")
+      }
+    } catch (e) {
+      // error reading value
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
+    getData()
     if (loaded) {
       SplashScreen.hideAsync();
     }
@@ -95,7 +118,7 @@ export default function RootLayout() {
       useNativeDriver: true,
     }).start(() => setDropdownVisible(false));
   };
-
+  console.log("userInfo", userInfo)
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       {/* Wrapping the Stack Navigator with the Navbar */}
@@ -152,8 +175,11 @@ export default function RootLayout() {
 
         {/* Stack Navigator */}
         <View style={styles.content}>
-          <Stack>
+          <Stack
+            initialRouteName={userInfo?.token ? "(tabs)" : "(auth)"}
+          >
             <Stack.Screen name="index" options={{ headerShown: false }} />
+            
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="(nav)" options={{ headerShown: false }} />
